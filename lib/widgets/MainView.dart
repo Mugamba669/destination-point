@@ -1,5 +1,7 @@
 import 'package:admin/Auth/Auth.dart';
+import 'package:admin/models/Feedback.dart';
 import 'package:flutter/material.dart';
+import 'package:wiredash/wiredash.dart';
 
 import '../models/PageTransition.dart';
 import 'Drawer/DrawerWidgets.dart';
@@ -72,6 +74,13 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
             child: Column(
               children: [
                 UserAccountsDrawerHeader(
+                  currentAccountPicture: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.asset(
+                      "assets/splash.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   accountName: Text(
                     "Desination point",
                     style: TextStyle(
@@ -81,7 +90,8 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                   ),
                   accountEmail: Text("Signed in as ${Auth().getUser()}"),
                 ),
-                Expanded(
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: ListView.separated(
                     itemBuilder: (context, index) => index != 4
                         ? ListTile(
@@ -104,6 +114,15 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                     separatorBuilder: (context, index) => Divider(),
                     itemCount: DWidgets.widgets.length,
                   ),
+                ),
+                ListTile(
+                  title: Text("Feedback"),
+                  leading: Icon(Icons.feedback_rounded),
+                  onTap: () {
+                    Navigator.of(context).pop();
+
+                    Wiredash.of(context)!.show();
+                  },
                 )
               ],
             ),

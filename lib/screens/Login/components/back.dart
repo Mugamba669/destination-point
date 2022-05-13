@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 class Back extends StatelessWidget {
   Widget child;
   final AnimationController animation;
-  Back({Key? key, required this.child, required this.animation})
+  final Color? background;
+  Back(
+      {Key? key,
+      required this.child,
+      this.background = Colors.indigo,
+      required this.animation})
       : super(key: key);
 
   @override
@@ -22,7 +27,7 @@ class Back extends StatelessWidget {
                 child: Container(
                   width: 400,
                   height: MediaQuery.of(context).size.height / 2,
-                  decoration: BoxDecoration(color: Colors.indigo[400]),
+                  decoration: BoxDecoration(color: background),
                 ),
               ),
             ),

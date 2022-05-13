@@ -1,5 +1,7 @@
 import 'package:admin/Auth/Auth.dart';
 import 'package:admin/models/PageTransition.dart';
+import 'package:admin/screens/Login/components/back.dart';
+import 'package:admin/widgets/Space.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -26,53 +28,44 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return PageTransition(
-        animation: sAimation,
-        child: Scaffold(
-          body: Stack(
-            children: [
-              Positioned(
-                top: 50,
-                left: MediaQuery.of(context).size.width * 0.3,
-                child: PhysicalModel(
-                  shape: BoxShape.circle,
-                  color: Colors.transparent,
-                  elevation: 8,
-                  child: Container(
-                    width: 150,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/splash.png"),
-                      ),
-                    ),
-                  ),
+    return Back(
+        background: Colors.grey[400],
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/splash.png"),
                 ),
               ),
-              Positioned(
-                  top: 40,
-                  left: 20,
-                  child: BackButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                  )),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: ListView(
-                    children: [
-                      Spacer(),
-                      ListTile(
-                        title: Text("${Auth().auth.currentUser!.email}"),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
+              child: Stack(
+                children: [
+                  Positioned(
+                      child: CircleAvatar(
+                    child: BackButton(),
+                  ))
+                ],
+              ),
+            ),
+            Space(
+              space: 0.3,
+            ),
+            ListTile(
+              title: Text("Signed In email"),
+              trailing: Text("${Auth().auth.currentUser!.email}"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Sign out"),
+              onTap: () => Auth().logoutUser(context),
+            )
+          ],
+        ),
+        animation: sAimation);
   }
 }
